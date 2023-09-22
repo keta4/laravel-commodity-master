@@ -58,14 +58,23 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         //
+        $product = Product::find($id);
+
+        return view('products.edit', [
+            'product' => $product
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
         //
+        $product = Product::find($id);
+        $product->fill($request->all())->save();
+
+        return redirect()->route('products.index')->with('message', '商品を更新しました');
     }
 
     /**
