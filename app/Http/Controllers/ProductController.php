@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -26,14 +27,21 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('products.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //
+        $product = new Product();
+
+        // fillを使用する場合は、必ずモデルのfillableを指定する
+        $product->fill($request->all())->save();
+
+        return redirect()->route('products.index')->with('message', '商品を登録しました');
     }
 
     /**
