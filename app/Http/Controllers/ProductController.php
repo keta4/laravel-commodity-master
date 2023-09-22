@@ -83,5 +83,8 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+        Product::where('id', $id)->delete();
+
+        return redirect()->route('products.index')->with('message', '商品を削除しました');
     }
 }
